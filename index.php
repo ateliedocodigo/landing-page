@@ -106,7 +106,7 @@ $api = new Mailchimp($config['apiKey'], ['debug' => true]);
       <span class="bracket right">}</span>
     </div>
     <div class="email-form-wrap">
-        <form method="post">
+        <form method="POST" action="">
 <?php if (filter_var($email, FILTER_VALIDATE_EMAIL)): ?>
     <?php
         try {
