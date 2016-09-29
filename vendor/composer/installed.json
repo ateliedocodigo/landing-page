@@ -46,5 +46,122 @@
             "api",
             "email"
         ]
+    },
+    {
+        "name": "spomky-labs/base64url",
+        "version": "v1.0.2",
+        "version_normalized": "1.0.2.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/Spomky-Labs/base64url.git",
+            "reference": "ef6d5fb93894063d9cee996022259fd08d6646ea"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/Spomky-Labs/base64url/zipball/ef6d5fb93894063d9cee996022259fd08d6646ea",
+            "reference": "ef6d5fb93894063d9cee996022259fd08d6646ea",
+            "shasum": ""
+        },
+        "require": {
+            "php": "^5.3|^7.0"
+        },
+        "require-dev": {
+            "phpunit/phpunit": "^4.0|^5.0",
+            "satooshi/php-coveralls": "^1.0"
+        },
+        "time": "2016-01-21 19:50:30",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "1.0.x-dev"
+            }
+        },
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "Base64Url\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Florent Morselli",
+                "homepage": "https://github.com/Spomky-Labs/base64url/contributors"
+            }
+        ],
+        "description": "Base 64 URL Safe Encoding/decoding PHP Library",
+        "homepage": "https://github.com/Spomky-Labs/base64url",
+        "keywords": [
+            "base64",
+            "rfc4648",
+            "safe",
+            "url"
+        ]
+    },
+    {
+        "name": "schnittstabil/csrf-tokenservice",
+        "version": "2.0.1",
+        "version_normalized": "2.0.1.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/schnittstabil/csrf-tokenservice.git",
+            "reference": "e23d09cb235589fda3b42b36aaa21aa19bd833ec"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/schnittstabil/csrf-tokenservice/zipball/e23d09cb235589fda3b42b36aaa21aa19bd833ec",
+            "reference": "e23d09cb235589fda3b42b36aaa21aa19bd833ec",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.6.0",
+            "spomky-labs/base64url": "^1.0"
+        },
+        "require-dev": {
+            "codeclimate/php-test-reporter": "^0.3.0",
+            "fabpot/php-cs-fixer": "^1.10",
+            "halleck45/phpmetrics": "^1.8",
+            "phpmd/phpmd": "^2.3",
+            "satooshi/php-coveralls": "^1.0.1",
+            "schnittstabil/sugared-phpunit": "^0.2.0",
+            "squizlabs/php_codesniffer": "^2.5",
+            "vladahejda/phpunit-assert-exception": "^1.0"
+        },
+        "time": "2016-04-08 16:15:05",
+        "type": "library",
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "Schnittstabil\\Csrf\\TokenService\\": "src"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Michael Mayer",
+                "email": "michael@schnittstabil.de"
+            }
+        ],
+        "description": "Stateless CSRF (Cross-Site Request Forgery) token service.",
+        "homepage": "https://github.com/schnittstabil/csrf-tokenservice",
+        "keywords": [
+            "URL-safe",
+            "cross-site request forgery",
+            "csrf",
+            "generator",
+            "hmac",
+            "service",
+            "session riding",
+            "stateless",
+            "token",
+            "validator",
+            "xsrf"
+        ]
     }
 ]

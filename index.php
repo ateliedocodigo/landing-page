@@ -7,15 +7,41 @@
 
 require_once 'vendor/autoload.php'; # Download: http://apidocs.mailchimp.com/api/downloads/
 
+use Schnittstabil\Csrf\TokenService\TokenService;
+
+// Config default
+$config_default = [
+    'apiKey' => 'default',
+    'listId' => 'default',
+    // Shared secret key used for generating and validating token signatures:
+    'csrfKey' => 'ebec1745-f91a-44f5-8db7-373cb64d7eb7',
+    // Time to Live in seconds; default is 1440 seconds === 24 minutes:
+    'csrfTtl' => 1440,
+];
 try {
     $config = include 'config.php';
 } catch (Exception $e) {
     $config = [];
 }
+$config = array_merge($config_default, $config);
+
 # Configuration
 $email = isset($_POST['email']) ? $_POST['email'] : '';
+$token = isset($_POST['token']) ? $_POST['token'] : '';
 
 $api = new Mailchimp($config['apiKey'], ['debug' => true]);
+
+// create the TokenService
+$tokenService = new TokenService($config['csrfKey'], $config['csrfTtl']);
+
+// validate the token - stateless; no session needed
+if (!empty($email) && !$tokenService->validate($token)) {
+    http_response_code(403);
+    echo '<h2>403 Access Forbidden, bad CSRF token</h2>';
+    exit();
+}
+// generate a URL-safe token
+$token = $tokenService->generate();
 
 // echo "<pre>";
 // var_dump($api->lists->getList()); # Uncomment this to get ID's of mailing lists and select proper list ID.
@@ -131,6 +157,7 @@ $api = new Mailchimp($config['apiKey'], ['debug' => true]);
                 <input type="email" required name="email" class="email-input" value="<?php echo $email; ?>">
             </label>
             <button class="submit-button" type="submit">Quero receber!</button>
+            <input type="hidden" name="token" value="<?php echo $token; ?>">
         </form>
     </div>
 <script>

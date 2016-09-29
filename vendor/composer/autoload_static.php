@@ -6,6 +6,28 @@ namespace Composer\Autoload;
 
 class ComposerStaticInitedfc03aa0e7343db9b730f7faf2c93d3
 {
+    public static $prefixLengthsPsr4 = array (
+        'S' => 
+        array (
+            'Schnittstabil\\Csrf\\TokenService\\' => 32,
+        ),
+        'B' => 
+        array (
+            'Base64Url\\' => 10,
+        ),
+    );
+
+    public static $prefixDirsPsr4 = array (
+        'Schnittstabil\\Csrf\\TokenService\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/schnittstabil/csrf-tokenservice/src',
+        ),
+        'Base64Url\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/spomky-labs/base64url/src',
+        ),
+    );
+
     public static $prefixesPsr0 = array (
         'M' => 
         array (
@@ -19,6 +41,8 @@ class ComposerStaticInitedfc03aa0e7343db9b730f7faf2c93d3
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
+            $loader->prefixLengthsPsr4 = ComposerStaticInitedfc03aa0e7343db9b730f7faf2c93d3::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitedfc03aa0e7343db9b730f7faf2c93d3::$prefixDirsPsr4;
             $loader->prefixesPsr0 = ComposerStaticInitedfc03aa0e7343db9b730f7faf2c93d3::$prefixesPsr0;
 
         }, null, ClassLoader::class);

@@ -6,4 +6,6 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'Schnittstabil\\Csrf\\TokenService\\' => array($vendorDir . '/schnittstabil/csrf-tokenservice/src'),
+    'Base64Url\\' => array($vendorDir . '/spomky-labs/base64url/src'),
 );
