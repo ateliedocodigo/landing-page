@@ -117,6 +117,15 @@ $token = $tokenService->generate();
             text-align: center;
         }
     </style>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-84648519-1', 'auto');
+  ga('send', 'pageview');
+</script>
 </head>
 
 <body>
@@ -156,18 +165,9 @@ $token = $tokenService->generate();
                 Email*
                 <input type="email" required name="email" class="email-input" value="<?php echo $email; ?>">
             </label>
-            <button class="submit-button" type="submit">Quero receber!</button>
+            <button class="submit-button" type="submit" onclick="ga('send', 'event', 'List', 'subscribe', 'Capa ateliedocodigo');">Quero receber!</button>
             <input type="hidden" name="token" value="<?php echo $token; ?>">
         </form>
     </div>
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-84648519-1', 'auto');
-  ga('send', 'pageview');
-</script>
 </body>
 </html>
