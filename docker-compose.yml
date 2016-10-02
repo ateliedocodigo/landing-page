@@ -1,0 +1,9 @@
+version: '2'
+services:
+  landing_page:
+    build: .
+    image: luiscoms/landing-page
+    ports:
+      - "7777:80"
+    volumes:
+      - ./:/var/www/html
