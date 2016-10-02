@@ -19,6 +19,9 @@ $config_default = [
     'csrfTtl' => 1440,
 ];
 try {
+    if (!is_file('config.php')) {
+        throw new Exception("Config file not found!");
+    }
     $config = include 'config.php';
 } catch (Exception $e) {
     $config = [];
@@ -52,71 +55,11 @@ $token = $tokenService->generate();
 <head>
     <title>Ateliê do Código</title>
     <meta charset="utf-8" />
-    <style>
-        body {
-            background-color: rgba(34, 34, 34, 1);
-            color: #fff;
-        }
-        .email-form-wrap {
-            background: linear-gradient(#3e9be2, #2a6999);
-            color: #fff;
-            font-family: arial;
-            font-weight: bold;
-            border-radius: 5px;
-            padding: 10px 10px;
-            display: table;
-            margin: 50px auto;
-        }
-        .email-form-wrap .email-input,
-        .email-form-wrap .submit-button {
-            padding: 5px 10px;
-        }
-        .email-form-wrap .submit-button {
-            background: linear-gradient(#f7941d, #d75305);
-            box-shadow: inset 0px 1px 0px #ffbb6a, inset 0 -1px 2px #a33f03;
-            border-radius: 5px;
-            border: 1px solid #333;
-            color: #fff;
-            text-shadow: 1px 1px #521601;
-            font-family: arial;
-            font-weight: bold;
-        }
-        .email-form-wrap .email-input {
-            background-color: #333;
-            color: #fff;
-            border: 1px solid #000;
-            border-radius: 5px;
-        }
-        .bracket {
-            font-size: 250px;
-            color: #333;
-        }
-        .brackets-content {
-          text-align: center;
-          font-family: 'helvetica', 'arial', 'sans serif';
-        }
-        .brackets-content .bracket {
-        }
-        .brackets-content .content {
-          text-align: center;
-        }
-        .brackets-content > span {
-          float: left;
-          width: 33.3%;
-        }
-        .clearfix:after {
-          content: ".";
-          display: block;
-          clear: both;
-          visibility: hidden;
-          line-height: 0;
-          height: 0;
-        }
-        .message {
-            margin-top: 0;
-            text-align: center;
-        }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+    <!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -127,47 +70,61 @@ $token = $tokenService->generate();
   ga('send', 'pageview');
 </script>
 </head>
-
 <body>
-    <div class="brackets-content clearfix">
-      <span class="bracket left">{</span>
-      <span class="content">
-        <h2>Fique Ligado!</h2>
-        <h3>Tem muito conteúdo bacana</h3>
-            Você é um artesão de software? <br>
-            Se interessa por novas tecnologias e tutorias de programação e boas práticas de código? Então deixe seu email e não perca nenhuma atualização.<br>
-            Enquanto isso, acessa <a href="http://fb.com/ateliedocodigo" target="_blank">Facebook</a>, <a href="https://www.youtube.com/channel/UCJtkz7su6iT_jZva5RoSZiQ" target="_blank">Youtube</a>, <a href="http://twitter.com/ateliedocodigo" target="_blank">Twitter</a>
-        </span>
-      <span class="bracket right">}</span>
-    </div>
-    <div class="email-form-wrap">
-        <form method="POST" action="">
+
+    <!-- Header -->
+    <header id="header">
+        <h1>Você é um artesão de software?</h1>
+        <p>Você é um artesão de software? <br />
+        Se interessa por novas tecnologias e tutorias de programação e boas práticas de código? <br />
+        Então deixe seu email e não perca nenhuma atualização.<br />
+        </p>
+    </header>
+
+    <!-- Signup Form -->
+    <form id="signup-form" method="post" action="#">
+        <input type="email" name="email" id="email" placeholder="Email" required value="<?php echo $email; ?>" />
+        <input type="submit" value="Quero receber!" />
+        <input type="hidden" name="token" value="<?php echo $token; ?>">
 <?php if (filter_var($email, FILTER_VALIDATE_EMAIL)): ?>
     <?php
         try {
-            $api->lists->subscribe($config['listId'], array('email'=> $email));
-            echo '<p class="message">Confirma no teu email a inscrição por favor.</p>';
+            $api->lists->subscribe($config['listId'], array('email' => $email, 'update_existing' => true));
+            echo '<span class="visible message success">Confirma no teu email a inscrição por favor.</span>';
         } catch (Mailchimp_Invalid_Email $e) {
-            echo 'Coloca um email válido por favor!';
+            echo '<span class="visible message failure">Coloca um email válido por favor!</span>';
             $api->log($e->getMessage());
         } catch (Mailchimp_List_AlreadySubscribed $e) {
-            echo '<p class="message">Teu email já está cadastrado. Valeu!</p>';
+            echo '<span class="visible message success">Teu email já está cadastrado. Valeu!</span>';
+            $api->log($e->getMessage());
+        } catch (Mailchimp_Invalid_ApiKey $e) {
+            echo '<span class="visible message failure">Ocorreu um erro, tente mais tarde</span>';
             $api->log($e->getMessage());
         } catch (Mailchimp_Error $e) {
-            echo '<p class="message">Coloca um email válido por favor!</p>';
+            echo '<span class="visible message failure">Coloca um email válido por favor!!</span>';
             $api->log($e->getMessage());
         }
-        ?>
-<?php else: ?>
+    ?>
 <?php endif;
 ?>
-            <label>
-                Email*
-                <input type="email" required name="email" class="email-input" value="<?php echo $email; ?>">
-            </label>
-            <button class="submit-button" type="submit" onclick="ga('send', 'event', 'List', 'subscribe', 'Capa ateliedocodigo');">Quero receber!</button>
-            <input type="hidden" name="token" value="<?php echo $token; ?>">
-        </form>
-    </div>
+    </form>
+
+    <!-- Footer -->
+    <footer id="footer">
+        <ul class="icons">
+            <li><a href="https://www.youtube.com/channel/UCJtkz7su6iT_jZva5RoSZiQ" target="_blank" class="icon fa-youtube"><span class="label">Instagram</span></a></li>
+            <li><a href="http://fb.com/ateliedocodigo" target="_blank" class="icon fa-facebook"><span class="label">Instagram</span></a></li>
+            <li><a href="http://twitter.com/ateliedocodigo" target="_blank" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+            <li><a href="https://github.com/ateliedocodigo" target="_blank" class="icon fa-github"><span class="label">GitHub</span></a></li>
+        </ul>
+        <ul class="copyright">
+            <li>&copy; Ateliê do Código.</li>
+        </ul>
+    </footer>
+
+    <!-- Scripts -->
+    <!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+    <script src="assets/js/main.js"></script>
+
 </body>
 </html>
