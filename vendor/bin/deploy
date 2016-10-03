@@ -1,6 +1,10 @@
 #!/bin/bash
 
+# scp index.php ateliedocodigo@ateliedocodigo.com.br:~/www/
+# exit
+
 git_branch=$(git branch 2>/dev/null | grep -e '\*' --color=never | sed 's/[^ ]\s\([azAZ]*\)/\1/')
+# git_branch=master
 
 git archive -v -o landing-page.tar.gz --format tar.gz $git_branch
 
