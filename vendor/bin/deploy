@@ -1,0 +1,13 @@
+#!/bin/bash
+
+git_branch=$(git branch 2>/dev/null | grep -e '\*' --color=never | sed 's/[^ ]\s\([azAZ]*\)/\1/')
+
+git archive -v -o landing-page.tar.gz --format tar.gz $git_branch
+
+ssh ateliedocodigo@ateliedocodigo.com.br mkdir -p tmp/
+
+scp landing-page.tar.gz ateliedocodigo@ateliedocodigo.com.br:~/tmp/
+
+ssh ateliedocodigo@ateliedocodigo.com.br tar xzvf tmp/landing-page.tar.gz -C www
+
+# scp config.php ateliedocodigo@ateliedocodigo.com.br:~/www/
