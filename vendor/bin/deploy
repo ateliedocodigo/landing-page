@@ -4,8 +4,10 @@
 # exit
 
 git_branch=$(git branch 2>/dev/null | grep -e '\*' --color=never | sed 's/[^ ]\s\([azAZ]*\)/\1/')
+git_branch=$(git symbolic-ref --short HEAD)
 # git_branch=master
 
+echo "Archiving branch $git_branch"
 git archive -v -o landing-page.tar.gz --format tar.gz $git_branch
 
 ssh ateliedocodigo@ateliedocodigo.com.br mkdir -p tmp/
